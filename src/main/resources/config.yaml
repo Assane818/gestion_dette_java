@@ -1,11 +1,11 @@
 persistence: "POSTGRESQLDETTES"
-# repository:
-#   clientRepository: com.asn.data.repositories.db.ClientRepositoryImplBd
-#   userRepository: com.asn.data.repositories.db.UserRepositoryImplBd
-#   articleRepository: com.asn.data.repositories.db.ArticleRepositoryImplBd
-#   detteRepository: com.asn.data.repositories.db.DetteRepositoryImplBd
-#   detailRepository: com.asn.data.repositories.db.DetailRepositoryImplBd
-#   payementRepository: com.asn.data.repositories.db.PayementRepositoryImplBd
+repository:
+  clientRepository: com.asn.data.repositories.db.ClientRepositoryImplBd
+  userRepository: com.asn.data.repositories.db.UserRepositoryImplBd
+  articleRepository: com.asn.data.repositories.db.ArticleRepositoryImplBd
+  detteRepository: com.asn.data.repositories.db.DetteRepositoryImplBd
+  detailRepository: com.asn.data.repositories.db.DetailRepositoryImplBd
+  payementRepository: com.asn.data.repositories.db.PayementRepositoryImplBd
 
 # repository:
 #   clientRepository: com.asn.data.repositories.jpa.ClientRepositoryImplJpa
@@ -15,10 +15,10 @@ persistence: "POSTGRESQLDETTES"
 #   detailRepository: com.asn.data.repositories.jpa.DetailRepositoryImplJpa
 #   payementRepository: com.asn.data.repositories.jpa.PayementRepositoryImplJpa
 
-repository:
-  clientRepository: com.asn.data.repositories.list.ClientRepositoryImplList
-  userRepository: com.asn.data.repositories.list.UserRepositoryImplList
-  articleRepository: com.asn.data.repositories.list.ArticleRepositoryImplList
-  detteRepository: com.asn.data.repositories.list.DetteRepositoryImplList
-  detailRepository: com.asn.data.repositories.list.DetailRepositoryImplList
-  payementRepository: com.asn.data.repositories.list.PayementRepositoryImplList
+# repository:
+#   clientRepository: com.asn.data.repositories.list.ClientRepositoryImplList
+#   userRepository: com.asn.data.repositories.list.UserRepositoryImplList
+#   articleRepository: com.asn.data.repositories.list.ArticleRepositoryImplList
+#   detteRepository: com.asn.data.repositories.list.DetteRepositoryImplList
+#   detailRepository: com.asn.data.repositories.list.DetailRepositoryImplList
+#   payementRepository: com.asn.data.repositories.list.PayementRepositoryImplList
