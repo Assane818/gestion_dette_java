@@ -1,7 +1,5 @@
 package com.asn.data.repositories.db;
 
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,36 +11,23 @@ import com.asn.data.repositories.ClientRepository;
 import com.asn.data.repositories.UserRepository;
 
 public class ClientRepositoryImplBd extends RepositoryBdImpl<Client>  implements ClientRepository{
-    private UserRepository userRepositoryImpl;
-
+    
     public ClientRepositoryImplBd(UserRepository userRepository) {
-        this.tableName = "client";
-        this.userRepositoryImpl = userRepository;
+        super.tableName = "clients";
+        super.className = Client.class;
+        super.userRepository = userRepository;
     }
 
-
     @Override
-    public void insert(Client client) {
+    public Client selectByPhone(String phone) {
         try {
-            User user = client.getUser();
-            if (user != null) {
-                userRepositoryImpl.insert(user);
-            }
-            String sql = String.format("INSERT INTO \"%s\" (\"surname\", \"phone\", \"address\", \"userId\") VALUES (?,?,?,?)", this.tableName);
+            String sql = String.format(" SELECT * FROM \"%s\" WHERE \"phone\" like ?", this.tableName);
             this.getConnexion();
             this.iniPreparedStatement(sql);
-            this.ps.setString(1, client.getSurname());
-            this.ps.setString(2, client.getPhone());
-            this.ps.setString(3, client.getAddress());
-            if (user != null) {
-                this.ps.setInt(4, user.getId());
-            } else {
-                this.ps.setNull(4, Types.INTEGER);
-            }
-            this.executeUpdate();
-            ResultSet rs = this.ps.getGeneratedKeys();
-            if (rs.next()) {
-                client.setId(rs.getInt(1));
+            this.ps.setString(1, phone);
+            ResultSet rs = this.executeQuery();
+            while (rs.next()) {
+                return convertToObject(rs, className);
             }
             rs.close();
         } catch (SQLException e) {
@@ -54,51 +39,7 @@ public class ClientRepositoryImplBd extends RepositoryBdImpl<Client>  implements
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public Client selectById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectById'");
-    }
-
-    
-
-
-    @Override
-    public Client selectByPhone(String phone) {
-        try {
-            String sql = String.format(" SELECT * FROM \"%s\" WHERE \"phone\" like ?", this.tableName);
-            this.getConnexion();
-            this.iniPreparedStatement(sql);
-            this.ps.setString(1, phone);
-            ResultSet rs = this.executeQuery();
-            while (rs.next()) {
-                return convertToObject(rs);
-            }
-            rs.close();
-        } catch (SQLException e) {
-           System.out.println("Erreur: " + e.getMessage());
-        } finally {
-            try {
-                this.closeConnexion();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         return null;
-    }
-
-    @Override
-    public Client convertToObject(ResultSet rs) throws SQLException {
-        Client client = new Client();
-        client.setId(rs.getInt("id"));
-        client.setSurname(rs.getString("surname"));
-        client.setPhone(rs.getString("phone"));
-        client.setAddress(rs.getString("address"));
-        int userId = rs.getInt("userId");
-        client.setUser(userRepositoryImpl.selectById(userId));
-        return client;
     }
 
     @Override
@@ -110,11 +51,11 @@ public class ClientRepositoryImplBd extends RepositoryBdImpl<Client>  implements
             this.ps.setString(1, surname);
             ResultSet rs = this.executeQuery();
             while (rs.next()) {
-                return convertToObject(rs);
+                return convertToObject(rs, className);
             }
             rs.close();
         } catch (SQLException e) {
-           System.out.println("Erreur: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             try {
                 this.closeConnexion();
@@ -125,5 +66,66 @@ public class ClientRepositoryImplBd extends RepositoryBdImpl<Client>  implements
         return null;
     }
 
-    
+    @Override
+    public void updateUserId(Client object, int id) {
+        try {
+            String sql = "UPDATE clients SET user_id = ? WHERE id = ?";
+            this.getConnexion();
+            this.iniPreparedStatement(sql);
+            this.ps.setInt(1, id);
+            this.ps.setInt(2, object.getId());
+            this.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Client> selectClientAccount() {
+        List<Client> allArticles = this.selectAll(className);
+        List<Client> articlesAccount = new ArrayList<>();
+        for (Client client : allArticles) {
+            if (client.getUser() != null) {
+                articlesAccount.add(client);
+            }
+        }
+        return articlesAccount;
+    }
+
+    @Override
+    public List<Client> selectClientNoAccount() {
+        List<Client> allArticles = this.selectAll(className);
+        List<Client> articlesNoAccount = new ArrayList<>();
+        for (Client client : allArticles) {
+            if (client.getUser() == null) {
+                articlesNoAccount.add(client);
+            }
+        }
+        return articlesNoAccount;
+    }
+
+    @Override
+    public Client selectByUser(User user) {
+        try {
+            String sql = String.format(" SELECT * FROM \"%s\" WHERE \"user_id\" = ?", this.tableName);
+            this.getConnexion();
+            this.iniPreparedStatement(sql);
+            this.ps.setInt(1, user.getId());
+            ResultSet rs = this.executeQuery();
+            while (rs.next()) {
+                return convertToObject(rs, className);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                this.closeConnexion();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }

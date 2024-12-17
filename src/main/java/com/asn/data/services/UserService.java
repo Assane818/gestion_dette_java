@@ -9,4 +9,6 @@ public interface UserService extends Service<User> {
     boolean updateEtat(User object, boolean etat);
     List<User> getUsersByEtat();
     List<User> getUsersByRole(Role role);
+    User getByLogin(String login);
+    User selectUserConnect(String login, String password);
 }

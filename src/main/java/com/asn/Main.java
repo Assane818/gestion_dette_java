@@ -2,131 +2,127 @@ package com.asn;
 
 import java.util.Scanner;
 
-import com.asn.core.factory.ArticleFactory;
-import com.asn.core.factory.ClientFactory;
-import com.asn.core.factory.UserFactory;
+import com.asn.core.controllers.UserConnect;
+import com.asn.core.factory.RepositoryFactory;
+import com.asn.core.factory.ServiceFactory;
+import com.asn.core.factory.ViewFactory;
+import com.asn.core.factory.Impl.RepositoryFactoryImpl;
+import com.asn.core.factory.Impl.ServiceFactoryImpl;
+import com.asn.core.factory.Impl.ViewFactoryImpl;
+import com.asn.data.controllers.AdminController;
+import com.asn.data.controllers.BoutiquierController;
+import com.asn.data.controllers.ClientController;
 import com.asn.data.entities.Article;
 import com.asn.data.entities.Client;
+import com.asn.data.entities.Detail;
+import com.asn.data.entities.Dette;
+import com.asn.data.entities.Payement;
 import com.asn.data.entities.User;
-import com.asn.data.repositories.ArticleRepository;
-import com.asn.data.repositories.ClientRepository;
-import com.asn.data.repositories.UserRepository;
-import com.asn.data.repositories.list.ArticleRepositoryImpl;
-import com.asn.data.services.ArticleServiceImpl;
+import com.asn.data.services.ArticleService;
 import com.asn.data.services.ClientService;
+import com.asn.data.services.DetailService;
+import com.asn.data.services.DetteService;
+import com.asn.data.services.PayementService;
 import com.asn.data.services.UserService;
 import com.asn.data.views.ArticleView;
 import com.asn.data.views.ClientView;
+import com.asn.data.views.DetailView;
+import com.asn.data.views.DetteView;
+import com.asn.data.views.PayementView;
 import com.asn.data.views.UserView;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-        public static void main(String[] args) {
-            ClientFactory clientFactory = new ClientFactory();
-            UserFactory userFactory = new UserFactory();
-            ArticleFactory articleFactory = new ArticleFactory();
-            UserRepository userRepository = userFactory.getUserRepository();
-            UserService userService = userFactory.getUserService();
-            ClientRepository clientRepository = clientFactory.getClientRepository(userRepository);
-            ClientService clientService = clientFactory.getClientService();
-            UserView userView = userFactory.getUserView(scanner);
-            ClientView clientView = clientFactory.getClientView(scanner);
-            ArticleRepository articleRepository = articleFactory.getArticleRepository();
-            ArticleServiceImpl articleService = articleFactory.getArticleService();
-            ArticleView articleView = articleFactory.getArticleView(scanner);
-            int choix;
-            do {
-                choix = showMenu();
-                switch (choix) {
-                    case 1:
-                        Client client1 = clientView.saisie();
-                        System.out.println("Voulez-vous ajouter un compte utilisateur O/N");
-                        char rs = scanner.next().charAt(0);
-                        if (rs == 'O') {
-                            User user = userView.saisie();
-                            client1.setUser(user);
-                        }
-                        clientService.save(client1);
-                        break;
-                    case 2:
-                        Client client = clientService.getByPhone(clientView.saisieString("Entrer le numero de telephone"));
-                        if (client == null) {
-                            System.out.println("Le client n'existe pas");
-                            break;
-                        }
-                        User user1 = userView.saisie();
-                        client.setUser(user1);
-                        userService.save(user1);
-                        break;
-                    case 3:
-                        userService.save(userView.saisieBoutiquierOrAdmin(userView.saisieRole()));
-                        break;
-                    case 4:
-                        User user = userService.getById(userView.saisieInt("Enter l'id de l'utilisateur"));
-                        if (user == null) {
-                            System.out.println("l'utilisateur n'existe pas");
-                            break;
-                        }
-                        userService.updateEtat(user, userView.saisieEtat());
-                        break;
-                    case 5:
-                        int filter;
-                        do {
-                            filter = userView.choiceFilter();
-                            switch (filter) {
-                                case 1:
-                                    userView.affiche(userService.getUsersByEtat());
-                                    break;
-                                case 2:
-                                    userView.affiche(userService.getUsersByRole(userView.saisieAllRole()));
-                                    break;
-                            }
-                            
-                        } while (filter != 1 && filter != 2);
-                        break;
-                    case 6:
-                        articleService.save(articleView.saisie());
-                        break;
-                    case 7:
-                        articleView.affiche(articleService.show());
-                        break;
-                    case 8:
-                        articleView.affiche(articleService.getByDisponiblity());
-                        break;
-                    case 9:
-                        Article article = articleService.getById(articleView.saisieInt("Entrer l'id de l'article"));
-                        if (article == null) {
-                            System.out.println("l'article n'existe pas");
-                            break;
-                        }
-                        articleService.update(article, articleView.saisieDouble("Entrer la nouvelle quantité"));
-                        break;
+    public static void main(String[] args) {
+        
+        //repository
+        RepositoryFactory<User> userRepositoryFactory = new RepositoryFactoryImpl<>(User.class);
+        RepositoryFactory<Client> clientRepositoryFactory = new RepositoryFactoryImpl<>(Client.class);
+        RepositoryFactory<Article> articleRepositoryFactory = new RepositoryFactoryImpl<>(Article.class);
+        RepositoryFactory<Dette> detteRepositoryFactory = new RepositoryFactoryImpl<>(Dette.class);
+        RepositoryFactory<Detail> detailRepositoryFactory = new RepositoryFactoryImpl<>(Detail.class);
+        RepositoryFactory<Payement> payementRepositoryFactory = new RepositoryFactoryImpl<>(Payement.class);
+        var userRepository = userRepositoryFactory.getRepository();
+        var detailRepository = detailRepositoryFactory.getRepository();
+        var clientRepository = clientRepositoryFactory.getRepository();
+        var articleRepository = articleRepositoryFactory.getRepository();
+        var detteRepository = detteRepositoryFactory.getRepository();
+        var payementRepository = payementRepositoryFactory.getRepository();
 
-                    case 10:
-                        clientView.affiche(clientService.show());
-                        break;
-                    case 11:
-                        System.out.println(clientService.getByPhone(clientView.saisieString("Entrer le numero de telephone a rechercher")));
-                        break;
+        //service
+        ServiceFactory<User> userServiceFactory = new ServiceFactoryImpl<>(User.class, userRepository);
+        ServiceFactory<Client> clientServiceFactory = new ServiceFactoryImpl<>(Client.class, clientRepository);
+        ServiceFactory<Article> articleServiceFactory = new ServiceFactoryImpl<>(Article.class, articleRepository);
+        ServiceFactory<Dette> detteServiceFactory = new ServiceFactoryImpl<>(Dette.class, detteRepository);
+        ServiceFactory<Detail> detailServiceFactory = new ServiceFactoryImpl<>(Detail.class, detailRepository);
+        ServiceFactory<Payement> payementServiceFactory = new ServiceFactoryImpl<>(Payement.class, payementRepository);
 
-                }
-            } while (choix != 0);
-            
-            
-        }
-        public static int showMenu() {
-            System.out.println("1-Creer un client");
-            System.out.println("2-Creer un compte utilisateur a un client");
-            System.out.println("3-Creer un compte utilisateur avec un role Boutiquier ou  Admin");
-            System.out.println("4-Désactiver/Activer  un compte utilisateur");
-            System.out.println("5-Afficher les comptes utilisateurs  actifs ou par role");
-            System.out.println("6-Créer un article");
-            System.out.println("7-lister les articles");
-            System.out.println("8-filtrer les articles par disponibilité");
-            System.out.println("9-Mettre à jour la qté en stock d’un article");
-            System.out.println("10-lister client");
-            System.out.println("11-chercher un client par numero de telephone");
-            System.out.println("Entrer votre choix:");
-            return scanner.nextInt();
-        }
+        var userService = (UserService)userServiceFactory.getService();
+        var clientService = (ClientService)clientServiceFactory.getService();
+        var articleService = (ArticleService)articleServiceFactory.getService();
+        var detteService = (DetteService)detteServiceFactory.getService();
+        var detailService = (DetailService)detailServiceFactory.getService();
+        var payementService = (PayementService)payementServiceFactory.getService();
+
+        //view
+        ViewFactory<User> userViewFactory = new ViewFactoryImpl<>(User.class, userService);
+        ViewFactory<Client> clientViewFactory = new ViewFactoryImpl<>(Client.class, clientService);
+        ViewFactory<Article> articleViewFactory = new ViewFactoryImpl<>(Article.class, articleService);
+        ViewFactory<Dette> detteViewFactory = new ViewFactoryImpl(Dette.class, clientService, articleService, detailService);
+        ViewFactory<Detail> detailViewFactory = new ViewFactoryImpl<>(Detail.class, null);
+        ViewFactory<Payement> payementViewFactory = new ViewFactoryImpl<>(Payement.class, null);
+
+        var userView = (UserView)userViewFactory.getView();
+        var clientView = (ClientView)clientViewFactory.getView();
+        var articleView = (ArticleView)articleViewFactory.getView();
+        var detteView = (DetteView)detteViewFactory.getView();
+        var detailView = (DetailView)detailViewFactory.getView();
+        var payementView = (PayementView)payementViewFactory.getView();
+
+        do {
+            User userConnect = userView.saisieConnexion();
+            if (userConnect == null) {
+                System.out.println("Login ou mot de passe invalide");
+                continue;
+            }
+            UserConnect.setUserConnect(userConnect);
+            int choix = 0;
+            switch (userConnect.getRole()) {
+                case ADMIN:
+                    AdminController adminController = new AdminController(scanner, clientService, clientView, userService, userView, articleService, articleView, detteService, detteView);
+                    System.out.println("-------------------------");
+                    System.out.println("BIENVENUE CHER ADMIN");
+                    System.out.println("-------------------------");
+                    do {
+                        choix = adminController.showMenu();
+                        adminController.run(choix);
+                    } while (choix != 10);
+                    break;
+                case CLIENT:
+                    ClientController clientController = new ClientController(scanner, clientService, clientView, detteService, detteView, detailService, detailView, payementService, payementView);
+                    System.out.println("-------------------------");
+                    System.out.println("BIENVENUE CHER CLIENT");
+                    System.out.println("-------------------------");
+                    do {
+                        choix = clientController.showMenu();
+                        clientController.run(choix);
+                    } while (choix != 5);
+                    break;
+                case BOUTIQUIER:
+                    BoutiquierController boutiquierController = new BoutiquierController(scanner, clientView, userView, userService, clientService,  detailService, detteView, detteService, payementView, payementService, detailView, articleService);
+                    System.out.println("-------------------------");
+                    System.out.println("BIENVENUE CHER BOUTIQUIER");
+                    System.out.println("-------------------------");
+                    do {
+                        choix = boutiquierController.showMenu();
+                        boutiquierController.run(choix);
+                    } while (choix != 9);
+                    break;
+                default:
+                    break;
+     
+            }
+        } while (true);
+    }
+
 }

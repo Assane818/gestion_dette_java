@@ -5,12 +5,13 @@ public enum Role {
     BOUTIQUIER,
     CLIENT;
 
-    public static Role getValue(String value) {
+    public static Role getValue(int value) {
         for (Role role : Role.values()) {
-            if (role.name().compareTo(value) == 0) {
+            if (role.ordinal() == value) {
                 return role;
             }
         }
         return null;
     }
 }
+    

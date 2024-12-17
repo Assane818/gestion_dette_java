@@ -9,4 +9,5 @@ public interface DataBase {
     ResultSet executeQuery() throws SQLException;
     int executeUpdate() throws SQLException;
     void iniPreparedStatement(String sql) throws SQLException;
+    
 }
