@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="723.0" style="-fx-background-color: #f2f5fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asn.controller.PayementController">
+   <children>
+      <AnchorPane prefHeight="430.0" prefWidth="149.0" style="-fx-background-color: #3B5998; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 3);">
+         <children>
+            <Button fx:id="listeClientButton" accessibleRole="TEXT" layoutX="18.0" layoutY="121.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #4A76A8; -fx-background-radius: 8px; -fx-text-fill: WHITE;" text="Lister client" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <Text fill="WHITE" layoutX="8.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Superfly Shop" textAlignment="CENTER">
+               <font>
+                  <Font name="Algerian" size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="listeDetteButton" accessibleRole="TEXT" layoutX="18.0" layoutY="169.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #4A76A8; -fx-background-radius: 8px; -fx-text-fill: WHITE;" text="Lister un dette" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="deconnexionButton" accessibleRole="TEXT" layoutX="20.0" layoutY="227.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #E53935; -fx-background-radius: 8px; -fx-text-fill: WHITE;" text="Deconnexion" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="43.0" fitWidth="81.0" layoutX="20.0" layoutY="14.0">
+               <image>
+                  <Image url="@img/WhatsApp_Image_2024-10-18_at_22.01.16-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Pane layoutX="156.0" layoutY="79.0" prefHeight="296.0" prefWidth="511.0" style="-fx-background-color: #3B5998; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 3);">
+         <children>
+            <Text fill="WHITE" layoutX="90.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enregistrer un payement" wrappingWidth="330.23828125">
+               <font>
+                  <Font name="Algerian" size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="idDetteField" layoutX="40.0" layoutY="94.0" prefHeight="31.0" prefWidth="431.0" promptText="Entez l'id de la dette" />
+            <Label layoutX="40.0" layoutY="63.0" prefHeight="31.0" prefWidth="75.0" text="Dette" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Button fx:id="payerButton" layoutX="377.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" style="-fx-background-color: #1cdb49; -fx-background-radius: 5px;" text="Payer" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="annulerButton" layoutX="276.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" style="-fx-background-color: none; -fx-background-radius: 5px; -fx-border-color: #ff0000; -fx-border-radius: 5px;" text="Annuler" textFill="RED" />
+            <TextField fx:id="montantField" layoutX="40.0" layoutY="179.0" prefHeight="31.0" prefWidth="431.0" promptText="Entez le montant a payer" />
+            <Label layoutX="40.0" layoutY="148.0" prefHeight="31.0" prefWidth="103.0" text="Montant" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</Pane>

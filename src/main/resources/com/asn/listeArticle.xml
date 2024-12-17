@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="680.0" style="-fx-background-color: #f2f5fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.asn.controller.UserTableController">
+   <children>
+      <AnchorPane prefHeight="402.0" prefWidth="149.0" style="-fx-background-color: #3B5998; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 3);">
+         <children>
+            <Button fx:id="listeUserButton" accessibleRole="TEXT" layoutX="18.0" layoutY="91.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #4A76A8; -fx-background-radius: 5px; -fx-text-fill: WHITE;" text="Lister Utilisateur" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <Text fill="WHITE" layoutX="24.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Superfly Shop" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Medium" size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="listeArticleButton" accessibleRole="TEXT" layoutX="18.0" layoutY="139.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #4A76A8; -fx-background-radius: 5px; -fx-text-fill: WHITE;" text="Lister un article" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="archiverDetteButton" accessibleRole="TEXT" layoutX="18.0" layoutY="190.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #4A76A8; -fx-background-radius: 5px; -fx-text-fill: WHITE;" text="Archiver dette" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="deconnexion Button" accessibleRole="TEXT" layoutX="18.0" layoutY="246.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #E53935; -fx-background-radius: 5px; -fx-text-fill: WHITE;" text="Deconnexion" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="43.0" fitWidth="81.0" layoutX="34.0" layoutY="10.0">
+               <image>
+                  <Image url="@img/WhatsApp_Image_2024-10-18_at_22.01.16-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Pane layoutX="157.0" layoutY="89.0" prefHeight="299.0" prefWidth="511.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 3);">
+         <children>
+            <Text fill="#3B5998" layoutX="175.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste Utilisateur" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto Bold" size="24.0" />
+               </font>
+            </Text>
+            <TableView fx:id="userTable" layoutX="22.0" layoutY="61.0" prefHeight="230.0" prefWidth="475.0" style="-fx-background-radius: 5px; -fx-border-color: #3B5998; -fx-border-radius: 5px; -fx-border-width: 1px;">
+              <columns>
+                <TableColumn fx:id="nomColumn" prefWidth="80.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #3B5998;" text="Nom" />
+                <TableColumn fx:id="prenomColumn" prefWidth="98.0" style="-fx-background-color: #FFFFFF;  -fx-border-color: #3B5998;" text="Prenom" />
+                  <TableColumn fx:id="loginColumn" prefWidth="130.0" style="-fx-background-color: #FFFFFF;  -fx-border-color: #3B5998;" text="Login" />
+                  <TableColumn fx:id ="roleColumn" prefWidth="84.0" style="-fx-background-color: #FFFFFF;  -fx-border-color: #3B5998;" text="Role" />
+                  <TableColumn prefWidth="77.0" style="-fx-background-color: #FFFFFF;" text="Actions" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</Pane>

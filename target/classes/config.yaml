@@ -1,0 +1,16 @@
+persistence: "POSTGRESQLDETTES"
+# repository:
+#   clientRepository: com.asn.data.repositories.db.ClientRepositoryImplBd
+#   userRepository: com.asn.data.repositories.db.UserRepositoryImplBd
+#   articleRepository: com.asn.data.repositories.db.ArticleRepositoryImplBd
+#   detteRepository: com.asn.data.repositories.db.DetteRepositoryImplBd
+#   detailRepository: com.asn.data.repositories.db.DetailRepositoryImplBd
+#   payementRepository: com.asn.data.repositories.db.PayementRepositoryImplBd
+
+repository:
+  clientRepository: com.asn.data.repositories.jpa.ClientRepositoryImplJpa
+  userRepository: com.asn.data.repositories.jpa.UserRepositoryImplJpa
+  articleRepository: com.asn.data.repositories.jpa.ArticleRepositoryImplJpa
+  detteRepository: com.asn.data.repositories.jpa.DetteRepositoryImplJpa
+  detailRepository: com.asn.data.repositories.jpa.DetailRepositoryImplJpa
+  payementRepository: com.asn.data.repositories.jpa.PayementRepositoryImplJpa
